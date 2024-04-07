@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>io.github.iso53</groupId>
-    <artifactId>InteractiveImagePanel</artifactId>
+    <artifactId>interactive-image-panel</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <name>InteractiveImagePanel</name>
