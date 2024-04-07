@@ -14,16 +14,13 @@ InteractiveImagePanel is a Java library that provides an interactive image panel
 
 ## Installation
 
-> [!NOTE]
-> I haven't publish this repository to maven yet. It's a working progress.
-> 
 Add the following dependency to your `pom.xml`:
 
 ```xml
 <dependency>
-    <groupId>io.github.iso53</groupId>
-    <artifactId>InteractiveImagePanel</artifactId>
-    <version>1.0-SNAPSHOT</version>
+  <groupId>io.github.iso53</groupId>
+  <artifactId>interactive-image-panel</artifactId>
+  <version>1.0-SNAPSHOT</version>
 </dependency>
 ```
 
