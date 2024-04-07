@@ -6,10 +6,16 @@ import java.awt.image.BufferedImage;
 
 public class InteractiveImagePanel extends JPanel {
 
+    private double maxZoomFactor;
+    private double minZoomFactor;
+    private double zoomStep;
     private double zoom;
     private BufferedImage image;
     private int scalingAlgorithm;
 
+    private final Point lastPressed;
+    private final Point currPosition;
+    private final Point tempPosition;
     public InteractiveImagePanel() {
         this.addMouseWheelListener(e -> {
             if (e.getPreciseWheelRotation() < 0) {
@@ -44,6 +50,34 @@ public class InteractiveImagePanel extends JPanel {
         }
     }
 
+    public void addZoomCapability() {
+        this.addMouseWheelListener(e -> {
+            // Store old zoom value in a variable
+            double oldZoom = zoom;
+
+            // Adjust zoom
+            if (e.getPreciseWheelRotation() < 0) {
+                if (zoom < maxZoomFactor) {
+                    zoom += zoomStep;
+                }
+            } else {
+                if (zoom > minZoomFactor) {
+                    zoom -= zoomStep;
+                }
+            }
+
+            // Calculate the mouse position relative to the image
+            Point mousePosition = e.getPoint();
+            double relativeX = (mousePosition.x - currPosition.x) / oldZoom;
+            double relativeY = (mousePosition.y - currPosition.y) / oldZoom;
+
+            // Adjust the position so that the mouse position remains at the same point in the image
+            currPosition.x = (int) (mousePosition.x - relativeX * zoom);
+            currPosition.y = (int) (mousePosition.y - relativeY * zoom);
+
+            refresh();
+        });
+    }
     public void setImage(BufferedImage image) {
         this.image = image;
     }
