@@ -102,6 +102,10 @@ public class InteractiveImagePanel extends JPanel {
             }
         });
     }
+    private void refresh() {
+        revalidate();
+        repaint();
+    }
     public void setImage(BufferedImage image) {
         this.image = image;
     }
