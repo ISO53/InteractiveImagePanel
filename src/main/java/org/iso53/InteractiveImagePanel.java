@@ -44,8 +44,8 @@ public class InteractiveImagePanel extends JPanel {
                             (int) (image.getWidth() * zoom),
                             (int) (image.getHeight() * zoom),
                             scalingAlgorithm),
-                    0,
-                    0,
+                    currPosition.x,
+                    currPosition.y,
                     this);
         }
     }
