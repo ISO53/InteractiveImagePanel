@@ -20,6 +20,9 @@ public class App {
 
         InteractiveImagePanel interactiveImagePanel = new InteractiveImagePanel();
         interactiveImagePanel.setImage(readDummyImage());
+        interactiveImagePanel.setScalingAlgorithm(8);
+        interactiveImagePanel.addZoomCapability();
+        interactiveImagePanel.addMoveCapability();
 
         jpnl_backPanel.add(interactiveImagePanel, BorderLayout.CENTER);
     }
