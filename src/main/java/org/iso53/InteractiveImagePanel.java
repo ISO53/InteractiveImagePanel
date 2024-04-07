@@ -17,21 +17,24 @@ public class InteractiveImagePanel extends JPanel {
     private final Point currPosition;
     private final Point tempPosition;
     public InteractiveImagePanel() {
-        this.addMouseWheelListener(e -> {
-            if (e.getPreciseWheelRotation() < 0) {
-                if (zoom < 2.5) {
-                    zoom += 0.025;
-                }
-            } else {
-                if (zoom > 0.25) {
-                    zoom -= 0.025;
-                }
-            }
-            revalidate();
-            repaint();
-        });
+        this.maxZoomFactor = 2.5;
+        this.minZoomFactor = 0.25;
+        this.zoomStep = 0.025;
         this.zoom = 1.0;
         this.scalingAlgorithm = Image.SCALE_DEFAULT;
+        this.lastPressed = new Point(0, 0);
+        this.currPosition = new Point(0, 0);
+        this.tempPosition = new Point(0, 0);
+    public InteractiveImagePanel(double maxZoomFactor, double minZoomFactor, double zoomStep, BufferedImage image,
+                                 int scalingAlgorithm) {
+        this.maxZoomFactor = maxZoomFactor;
+        this.minZoomFactor = minZoomFactor;
+        this.zoomStep = zoomStep;
+        this.image = image;
+        this.scalingAlgorithm = scalingAlgorithm;
+        this.lastPressed = new Point(0, 0);
+        this.currPosition = new Point(0, 0);
+        this.tempPosition = new Point(0, 0);
     }
 
     @Override
