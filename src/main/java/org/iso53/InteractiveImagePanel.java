@@ -106,19 +106,24 @@ public class InteractiveImagePanel extends JPanel {
         revalidate();
         repaint();
     }
+    public void setMaxZoomFactor(double maxZoomFactor) {
+        this.maxZoomFactor = maxZoomFactor;
+    }
+    public void setMinZoomFactor(double minZoomFactor) {
+        this.minZoomFactor = minZoomFactor;
+    }
+    public void setZoomStep(double zoomStep) {
+        this.zoomStep = zoomStep;
+    }
     public void setImage(BufferedImage image) {
         this.image = image;
     }
 
-    public void setScaleAlgorithm(int scaleAlgorithm) throws IllegalArgumentException {
-        if (scaleAlgorithm == Image.SCALE_DEFAULT ||
-                scaleAlgorithm == Image.SCALE_FAST ||
-                scaleAlgorithm == Image.SCALE_REPLICATE ||
-                scaleAlgorithm == Image.SCALE_SMOOTH ||
-                scaleAlgorithm == Image.SCALE_AREA_AVERAGING) {
+    public void setScalingAlgorithm(int scaleAlgorithm) throws IllegalArgumentException {
+        if (scaleAlgorithm == Image.SCALE_DEFAULT || scaleAlgorithm == Image.SCALE_FAST || scaleAlgorithm == Image.SCALE_REPLICATE || scaleAlgorithm == Image.SCALE_SMOOTH || scaleAlgorithm == Image.SCALE_AREA_AVERAGING) {
             this.scalingAlgorithm = scaleAlgorithm;
         } else {
-            throw new IllegalArgumentException("Invalid scale algorithm");
+            throw new IllegalArgumentException("Invalid scaling algorithm");
         }
     }
 }
