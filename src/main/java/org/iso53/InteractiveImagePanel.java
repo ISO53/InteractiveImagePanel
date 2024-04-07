@@ -6,18 +6,61 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
+/**
+ * This class represents an interactive image panel that can be zoomed and moved. It provides methods to set the zoom
+ * level, move the image, and set the image to be displayed. The image can be zoomed in and out with the mouse wheel,
+ * and moved by clicking and dragging.
+ */
 public class InteractiveImagePanel extends JPanel {
 
+    /**
+     * The maximum zoom factor for the image. The zoom factor determines how much the image can be zoomed in.
+     */
     private double maxZoomFactor;
+
+    /**
+     * The minimum zoom factor for the image. The zoom factor determines how much the image can be zoomed out.
+     */
     private double minZoomFactor;
+
+    /**
+     * The amount of zoom to be applied on each scroll with mouse wheel.
+     */
     private double zoomStep;
+
+    /**
+     * The current zoom level of the image.
+     */
     private double zoom;
+
+    /**
+     * The image to be displayed on the panel.
+     */
     private BufferedImage image;
+
+    /**
+     * The scaling algorithm to be used for zooming the image.
+     */
     private int scalingAlgorithm;
 
+    /**
+     * The last point where the mouse was pressed.
+     */
     private final Point lastPressed;
+
+    /**
+     * The current position of the image on the panel.
+     */
     private final Point currPosition;
+
+    /**
+     * A temporary position used for moving the image.
+     */
     private final Point tempPosition;
+
+    /**
+     * Constructs a new InteractiveImagePanel with default settings.
+     */
     public InteractiveImagePanel() {
         this.maxZoomFactor = 2.5;
         this.minZoomFactor = 0.25;
@@ -27,6 +70,17 @@ public class InteractiveImagePanel extends JPanel {
         this.lastPressed = new Point(0, 0);
         this.currPosition = new Point(0, 0);
         this.tempPosition = new Point(0, 0);
+    }
+
+    /**
+     * Constructs a new InteractiveImagePanel with the specified settings.
+     *
+     * @param maxZoomFactor    the maximum zoom factor for the image.
+     * @param minZoomFactor    the minimum zoom factor for the image.
+     * @param zoomStep         the amount of zoom to be applied on each scroll with mouse wheel.
+     * @param image            the image to be displayed on the panel.
+     * @param scalingAlgorithm the scaling algorithm to be used for zooming the image.
+     */
     public InteractiveImagePanel(double maxZoomFactor, double minZoomFactor, double zoomStep, BufferedImage image,
                                  int scalingAlgorithm) {
         this.maxZoomFactor = maxZoomFactor;
@@ -55,6 +109,11 @@ public class InteractiveImagePanel extends JPanel {
         }
     }
 
+    /**
+     * This method is used to add zoom capability to the image panel. It adds a mouse wheel listener to the panel
+     * which adjusts the zoom level and the position of the image based on the rotation of the mouse wheel and the
+     * position of the mouse pointer.
+     */
     public void addZoomCapability() {
         this.addMouseWheelListener(e -> {
             // Store old zoom value in a variable
@@ -83,6 +142,12 @@ public class InteractiveImagePanel extends JPanel {
             refresh();
         });
     }
+
+    /**
+     * This method is used to add move capability to the image panel. It adds a mouse listener and a mouse motion
+     * listener to the panel which adjust the position of the image based on the position of the mouse pointer and
+     * the dragging of the mouse.
+     */
     public void addMoveCapability() {
         setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
 
@@ -107,23 +172,68 @@ public class InteractiveImagePanel extends JPanel {
             }
         });
     }
+
+    /**
+     * This method is used to refresh the panel. It first validates this component and all of its subcomponents, then
+     * it causes the component to be repainted.
+     */
     private void refresh() {
         revalidate();
         repaint();
     }
+
+    /**
+     * This method is used to set the maximum zoom factor for the image. The zoom factor determines how much the
+     * image can be zoomed in.
+     *
+     * @param maxZoomFactor a double value representing the maximum zoom factor. Default is 2.5.
+     */
     public void setMaxZoomFactor(double maxZoomFactor) {
         this.maxZoomFactor = maxZoomFactor;
     }
+
+    /**
+     * This method is used to set the minimum zoom factor for the image. The zoom factor determines how much the
+     * image can be zoomed out.
+     *
+     * @param minZoomFactor a double value representing the minimum zoom factor. Default is 0.25.
+     */
     public void setMinZoomFactor(double minZoomFactor) {
         this.minZoomFactor = minZoomFactor;
     }
+
+    /**
+     * Sets the amount of zoom to be applied on each scroll with mouse wheel. Smaller the value smooth the zoom
+     * effect but also slow. Bigger the value smoothness decreases but faster to zoom-in/out.
+     *
+     * @param zoomStep double value for zoom step. Default is 0.025;
+     */
     public void setZoomStep(double zoomStep) {
         this.zoomStep = zoomStep;
     }
+
+    /**
+     * Sets the image to be rendered.
+     *
+     * @param image the image for displaying on the panel.
+     */
     public void setImage(BufferedImage image) {
         this.image = image;
     }
 
+    /**
+     * Decides which scaling algorithm should be used for scaling (zoom-in, zoom-out).
+     *
+     * @param scaleAlgorithm should be:<br>
+     *                       1  -> Image.SCALE_DEFAULT,<br>
+     *                       2  -> Image.SCALE_FAST,<br>
+     *                       4  -> Image.SCALE_REPLICATE,<br>
+     *                       8  -> Image.SCALE_SMOOTH<br>
+     *                       16 -> Image.SCALE_AREA_AVERAGING.<br>
+     * @throws IllegalArgumentException if a parameter other than the specified ones is given it will throw
+     *                                  IllegalArgumentException.
+     * @see Image
+     */
     public void setScalingAlgorithm(int scaleAlgorithm) throws IllegalArgumentException {
         if (scaleAlgorithm == Image.SCALE_DEFAULT || scaleAlgorithm == Image.SCALE_FAST || scaleAlgorithm == Image.SCALE_REPLICATE || scaleAlgorithm == Image.SCALE_SMOOTH || scaleAlgorithm == Image.SCALE_AREA_AVERAGING) {
             this.scalingAlgorithm = scaleAlgorithm;
