@@ -33,35 +33,6 @@ interactiveImagePanel.addZoomCapability();
 interactiveImagePanel.addMoveCapability();
 ```
 
-## API
-
-`InteractiveImagePanel()`<br>
-Constructs a new InteractiveImagePanel with default settings.
-
-`InteractiveImagePanel(double maxZoomFactor, double minZoomFactor, double zoomStep, BufferedImage image, int scalingAlgorithm)`<br>
-Constructs a new InteractiveImagePanel with the specified settings.  
-
-`addZoomCapability()`<br>
-This method is used to add zoom capability to the image panel.  
-
-`addMoveCapability()`<br>
-This method is used to add move capability to the image panel.  
-
-`setMaxZoomFactor(double maxZoomFactor)`<br>
-This method is used to set the maximum zoom factor for the image.  
-
-`setMinZoomFactor(double minZoomFactor)`<br>
-This method is used to set the minimum zoom factor for the image.  
-
-`setZoomStep(double zoomStep)`<br>
-Sets the amount of zoom to be applied on each scroll with mouse wheel.  
-
-`setImage(BufferedImage image)`<br>
-Sets the image to be rendered.  
-
-`setScalingAlgorithm(int scaleAlgorithm)`<br>
-Decides which scaling algorithm should be used for scaling (zoom-in, zoom-out).
-
 ## Contributing
 Contributions are welcome! Feel free to open issues or pull requests.
 
