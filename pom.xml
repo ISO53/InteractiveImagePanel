@@ -10,6 +10,9 @@
     <version>1.0-SNAPSHOT</version>
 
     <name>InteractiveImagePanel</name>
+    <description>A Java library that provides an interactive image panel that
+        can be zoomed and moved.
+    </description>
     <url>https://iso53.github.io/InteractiveImagePanel/</url>
 
     <properties>
@@ -17,6 +20,38 @@
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
     </properties>
+
+    <licenses>
+        <license>
+            <name>GNU General Public License v3.0</name>
+            <url>https://www.gnu.org/licenses/gpl-3.0.en.html</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>ISO53</name>
+            <email>ihsansimsek5335@gmail.com</email>
+            <url>https://iso53.github.io/</url>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git@github.com:ISO53/InteractiveImagePanel.git
+        </connection>
+        <developerConnection>
+            scm:git:ssh://github.com:ISO53/InteractiveImagePanel.git
+        </developerConnection>
+        <url>https://github.com/ISO53/InteractiveImagePanel/tree/master</url>
+    </scm>
+
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub ISO53 Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/ISO53/InteractiveImagePanel</url>
+        </repository>
+    </distributionManagement>
 
     <build>
         <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (maybe moved to parent pom) -->
