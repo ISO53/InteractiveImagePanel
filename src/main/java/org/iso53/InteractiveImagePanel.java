@@ -78,6 +78,30 @@ public class InteractiveImagePanel extends JPanel {
             refresh();
         });
     }
+    public void addMoveCapability() {
+        setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
+
+        this.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                super.mousePressed(e);
+                lastPressed.setLocation(e.getPoint());
+                tempPosition.setLocation(currPosition);
+            }
+        });
+
+        this.addMouseMotionListener(new MouseAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                super.mouseDragged(e);
+                currPosition.setLocation(
+                        tempPosition.x + (e.getX() - lastPressed.x),
+                        tempPosition.y + (e.getY() - lastPressed.y)
+                );
+                refresh();
+            }
+        });
+    }
     public void setImage(BufferedImage image) {
         this.image = image;
     }
