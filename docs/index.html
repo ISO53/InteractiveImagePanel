@@ -1,11 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <!-- Default meta tags -->
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3K0461TXL0"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-3K0461TXL0');
+    </script>
+
+    <!-- Preload resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Roboto+Mono:wght@600&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="index.css" />
+
+    <!-- Title -->
+    <title>Interactive Image Panel</title>
 </head>
+
 <body>
-    Welcome to Interactive Image Panel website.
+    <nav class="top_bar" id="top_bar">
+        <a href="https://iso53.github.io/InteractiveImagePanel" id="app_name">Interactive Image Panel</a>
+        <a href="#introduction">HOME</a>
+        <a href="#usage">USAGE</a>
+        <a href="#source">SOURCE</a>
+        <button id="top_bar_open_menu_button">☰</button>
+    </nav>
+    <div class="background">
+
+        <section class="section" id="introduction">
+            <div class="part text_left">
+                <h1>Easy to Use Interactive Image Panel for Java Swing</h1>
+                <p>InteractiveImagePanel is a Java library that provides an interactive image panel that can be zoomed
+                    and moved. The image can be zoomed in and out with the mouse wheel, and moved by clicking and
+                    dragging.</p>
+                <div
+                    style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-between; width: 100%;">
+                    <a href="#usage" class="filled short">Use it Now</a>
+                    <a href="#source" class="short">Learn More</a>
+                </div>
+            </div>
+            <div class="part">
+                <video class="video" src="res/example_video.mp4" autoplay muted loop></video>
+            </div>
+        </section>
+
+        <section class="section" id="usage">
+            <div class="part long_part">
+                <h1>Very Easy to Implement</h1>
+                <p>Add the Maven dependency into your pom.xml and integrate the provided code snippet for smooth implementation. And that's it!</p>
+
+                <h4 style="width: 100%; text-align: left; margin-bottom: 5px;">Add this to your pom.xml</h4>
+                <div id="dependency" style="width: 100%;"></div>
+                <h4 style="width: 100%; text-align: left; margin-bottom: 5px;">And this is the Java code</h4>
+                <div id="java_code" style="width: 100%;"></div>
+            </div>
+
+        </section>
+
+        <section class="section" id="source">
+            <div class="part text_left">
+                <h1>Dive into the Code and Contribute</h1>
+                <p>Excited to explore the inner workings of the Interactive Image Panel? You're in luck! I believe
+                    in transparent collaboration and empowered communities, so i've made the entire source code openly
+                    available on GitHub. Dive deep, tinker and contribute!
+                </p>
+                <a href="https://github.com/ISO53/InteractiveImagePanel">EXPLORE IT ON GITHUB</a>
+            </div>
+            <div class="part">
+                <img class="svg" src="res/coding.svg" alt="">
+            </div>
+        </section>
+    </div>
+
+    <script src="index.js"></script>
 </body>
+
 </html>
