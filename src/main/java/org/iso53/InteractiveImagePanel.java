@@ -2,6 +2,8 @@ package org.iso53;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -59,6 +61,22 @@ public class InteractiveImagePanel extends JPanel {
     private final Point tempPosition;
 
     /**
+     * Enum representing the fitting strategy for the image within the panel.
+     * <br>CONTAIN: The image is resized to fit within the panel while maintaining its aspect ratio.
+     * <br>COVER: The image is resized to cover the entire panel while maintaining its aspect ratio.
+     * <br>ORIGINAL: The image is displayed at its original size.
+     */
+    public enum IMAGE_FIT {
+        CONTAIN, COVER, ORIGINAL
+    }
+
+    /**
+     * The initial fitting strategy for the image within the panel. This value determines how the image is initially
+     * displayed when the panel is created.
+     */
+    private IMAGE_FIT imageFit;
+
+    /**
      * Constructs a new InteractiveImagePanel with default settings.
      */
     public InteractiveImagePanel() {
@@ -70,6 +88,15 @@ public class InteractiveImagePanel extends JPanel {
         this.lastPressed = new Point(0, 0);
         this.currPosition = new Point(0, 0);
         this.tempPosition = new Point(0, 0);
+        this.imageFit = IMAGE_FIT.COVER;
+
+        // Add a ComponentListener to adjust the zoom and position when the component is shown
+        this.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                adjustImageFit();
+            }
+        });
     }
 
     /**
@@ -82,7 +109,7 @@ public class InteractiveImagePanel extends JPanel {
      * @param scalingAlgorithm the scaling algorithm to be used for zooming the image.
      */
     public InteractiveImagePanel(double maxZoomFactor, double minZoomFactor, double zoomStep, BufferedImage image,
-                                 int scalingAlgorithm) {
+                                 int scalingAlgorithm, IMAGE_FIT imageFit) {
         this.maxZoomFactor = maxZoomFactor;
         this.minZoomFactor = minZoomFactor;
         this.zoomStep = zoomStep;
@@ -91,6 +118,14 @@ public class InteractiveImagePanel extends JPanel {
         this.lastPressed = new Point(0, 0);
         this.currPosition = new Point(0, 0);
         this.tempPosition = new Point(0, 0);
+        this.imageFit = imageFit;
+
+        this.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                adjustImageFit();
+            }
+        });
     }
 
     @Override
@@ -240,5 +275,46 @@ public class InteractiveImagePanel extends JPanel {
         } else {
             throw new IllegalArgumentException("Invalid scaling algorithm");
         }
+    }
+
+    /**
+     * Sets the initial fitting strategy for the image within the panel.
+     *
+     * @param imageFit an IMAGE_FIT enum value representing the initial fitting strategy.
+     * @see IMAGE_FIT
+     */
+    public void setImageFit(IMAGE_FIT imageFit) {
+        this.imageFit = imageFit;
+    }
+
+    /**
+     * Adjusts the zoom level and position of the image based on the current image fit strategy. After adjusting the
+     * zoom level and position, the panel is refreshed to reflect the changes.
+     *
+     * @see IMAGE_FIT
+     */
+    private void adjustImageFit() {
+        switch (this.imageFit) {
+            case CONTAIN:
+                // Adjust zoom and position for CONTAIN strategy
+                zoom = Math.min((double) getWidth() / image.getWidth(), (double) getHeight() / image.getHeight());
+                currPosition.x = (getWidth() - (int) (image.getWidth() * zoom)) / 2;
+                currPosition.y = (getHeight() - (int) (image.getHeight() * zoom)) / 2;
+                break;
+            case COVER:
+                // Adjust zoom and position for COVER strategy
+                zoom = Math.max((double) getWidth() / image.getWidth(), (double) getHeight() / image.getHeight());
+                currPosition.x = (getWidth() - (int) (image.getWidth() * zoom)) / 2;
+                currPosition.y = (getHeight() - (int) (image.getHeight() * zoom)) / 2;
+                break;
+            case ORIGINAL:
+                // Adjust zoom and position for ORIGINAL strategy
+                zoom = 1.0;
+                currPosition.x = (getWidth() - image.getWidth()) / 2;
+                currPosition.y = (getHeight() - image.getHeight()) / 2;
+                break;
+        }
+
+        refresh();
     }
 }
