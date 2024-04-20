@@ -4,6 +4,7 @@ InteractiveImagePanel is a Java library that provides an interactive image panel
 
 ## Features
 
+- You can now select three different Image-Fit (like CSS Object-Fit) property to scale and relocate the image on component resize. [NEW]
 - Zoom in and out with the mouse wheel
 - Move the image by clicking and dragging
 - Set the zoom level, move the image, and set the image to be displayed
@@ -20,7 +21,7 @@ Add the following dependency to your `pom.xml`:
 <dependency>
   <groupId>io.github.iso53</groupId>
   <artifactId>interactive-image-panel</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.1</version>
 </dependency>
 ```
 
@@ -28,9 +29,11 @@ Add the following dependency to your `pom.xml`:
 Here is a basic example of how to use the InteractiveImagePanel:
 ```java
 InteractiveImagePanel interactiveImagePanel = new InteractiveImagePanel();
-interactiveImagePanel.setImage(image); // BufferedImage here
+interactiveImagePanel.setImage(image);
+interactiveImagePanel.setScalingAlgorithm(8);
 interactiveImagePanel.addZoomCapability();
 interactiveImagePanel.addMoveCapability();
+interactiveImagePanel.setImageFit(InteractiveImagePanel.IMAGE_FIT.COVER);
 ```
 
 ## Contributing

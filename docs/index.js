@@ -2,14 +2,15 @@
 var dependency = `<dependency>
     <groupId>io.github.iso53</groupId>
     <artifactId>interactive-image-panel</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.1</version>
 </dependency>`;
 
 var javaCode = `InteractiveImagePanel interactiveImagePanel = new InteractiveImagePanel();
 interactiveImagePanel.setImage(image);
 interactiveImagePanel.setScalingAlgorithm(8);
 interactiveImagePanel.addZoomCapability();
-interactiveImagePanel.addMoveCapability();`;
+interactiveImagePanel.addMoveCapability();
+interactiveImagePanel.setImageFit(InteractiveImagePanel.IMAGE_FIT.COVER);`;
 
 // ************************ JS Starts ************************
 topNavbarListener();
