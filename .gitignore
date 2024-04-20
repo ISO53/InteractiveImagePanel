@@ -34,6 +34,6 @@ build/
 .vscode/
 
 ### Test files ###
-App.java
-App.form
-.resources/
+/App.java
+/App.form
+/.resources/
