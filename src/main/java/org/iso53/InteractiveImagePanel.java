@@ -294,6 +294,10 @@ public class InteractiveImagePanel extends JPanel {
      * @see IMAGE_FIT
      */
     private void adjustImageFit() {
+        if (image == null) {
+            return;
+        }
+
         switch (this.imageFit) {
             case CONTAIN:
                 // Adjust zoom and position for CONTAIN strategy
