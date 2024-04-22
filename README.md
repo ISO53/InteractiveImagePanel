@@ -30,7 +30,6 @@ Here is a basic example of how to use the InteractiveImagePanel:
 ```java
 InteractiveImagePanel interactiveImagePanel = new InteractiveImagePanel();
 interactiveImagePanel.setImage(image);
-interactiveImagePanel.setScalingAlgorithm(8);
 interactiveImagePanel.addZoomCapability();
 interactiveImagePanel.addMoveCapability();
 interactiveImagePanel.setImageFit(InteractiveImagePanel.IMAGE_FIT.COVER);
