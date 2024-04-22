@@ -42,11 +42,6 @@ public class InteractiveImagePanel extends JPanel {
     private BufferedImage image;
 
     /**
-     * The scaling algorithm to be used for zooming the image.
-     */
-    private int scalingAlgorithm;
-
-    /**
      * The last point where the mouse was pressed.
      */
     private final Point lastPressed;
@@ -85,7 +80,6 @@ public class InteractiveImagePanel extends JPanel {
         this.minZoomFactor = 0.25;
         this.zoomStep = 0.025;
         this.zoom = 1.0;
-        this.scalingAlgorithm = Image.SCALE_DEFAULT;
         this.lastPressed = new Point(0, 0);
         this.currPosition = new Point(0, 0);
         this.tempPosition = new Point(0, 0);
@@ -107,15 +101,13 @@ public class InteractiveImagePanel extends JPanel {
      * @param minZoomFactor    the minimum zoom factor for the image.
      * @param zoomStep         the amount of zoom to be applied on each scroll with mouse wheel.
      * @param image            the image to be displayed on the panel.
-     * @param scalingAlgorithm the scaling algorithm to be used for zooming the image.
      */
     public InteractiveImagePanel(double maxZoomFactor, double minZoomFactor, double zoomStep, BufferedImage image,
-                                 int scalingAlgorithm, IMAGE_FIT imageFit) {
+                                 IMAGE_FIT imageFit) {
         this.maxZoomFactor = maxZoomFactor;
         this.minZoomFactor = minZoomFactor;
         this.zoomStep = zoomStep;
         this.image = image;
-        this.scalingAlgorithm = scalingAlgorithm;
         this.lastPressed = new Point(0, 0);
         this.currPosition = new Point(0, 0);
         this.tempPosition = new Point(0, 0);
@@ -267,27 +259,6 @@ public class InteractiveImagePanel extends JPanel {
      */
     public void setImage(BufferedImage image) {
         this.image = image;
-    }
-
-    /**
-     * Decides which scaling algorithm should be used for scaling (zoom-in, zoom-out).
-     *
-     * @param scaleAlgorithm should be:<br>
-     *                       1  -> Image.SCALE_DEFAULT,<br>
-     *                       2  -> Image.SCALE_FAST,<br>
-     *                       4  -> Image.SCALE_REPLICATE,<br>
-     *                       8  -> Image.SCALE_SMOOTH<br>
-     *                       16 -> Image.SCALE_AREA_AVERAGING.<br>
-     * @throws IllegalArgumentException if a parameter other than the specified ones is given it will throw
-     *                                  IllegalArgumentException.
-     * @see Image
-     */
-    public void setScalingAlgorithm(int scaleAlgorithm) throws IllegalArgumentException {
-        if (scaleAlgorithm == Image.SCALE_DEFAULT || scaleAlgorithm == Image.SCALE_FAST || scaleAlgorithm == Image.SCALE_REPLICATE || scaleAlgorithm == Image.SCALE_SMOOTH || scaleAlgorithm == Image.SCALE_AREA_AVERAGING) {
-            this.scalingAlgorithm = scaleAlgorithm;
-        } else {
-            throw new IllegalArgumentException("Invalid scaling algorithm");
-        }
     }
 
     /**
