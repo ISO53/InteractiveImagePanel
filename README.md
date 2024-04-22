@@ -21,7 +21,7 @@ Add the following dependency to your `pom.xml`:
 <dependency>
   <groupId>io.github.iso53</groupId>
   <artifactId>interactive-image-panel</artifactId>
-  <version>1.1</version>
+  <version>1.2.1</version>
 </dependency>
 ```
 
