@@ -6,6 +6,7 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
 /**
@@ -133,15 +134,27 @@ public class InteractiveImagePanel extends JPanel {
         super.paintComponent(g);
 
         if (image != null) {
-            g.drawImage(
-                    image.getScaledInstance(
-                            (int) (image.getWidth() * zoom),
-                            (int) (image.getHeight() * zoom),
-                            scalingAlgorithm),
-                    currPosition.x,
-                    currPosition.y,
-                    this);
+            g.drawImage(scaleImage(image, zoom), currPosition.x, currPosition.y, this);
         }
+    }
+
+    /**
+     * Scales the given image by the specified ratio using the AffineTransform method.
+     *
+     * @param source the original BufferedImage to be scaled.
+     * @param ratio  the scaling ratio. A ratio greater than 1 enlarges the image, less than 1 shrinks the image.
+     * @return a new BufferedImage that is a scaled version of the original image.
+     */
+    public BufferedImage scaleImage(BufferedImage source, double ratio) {
+        BufferedImage bi = new BufferedImage(
+                (int) (source.getWidth() * ratio),
+                (int) (source.getHeight() * ratio),
+                BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2d = bi.createGraphics();
+        AffineTransform at = AffineTransform.getScaleInstance(ratio, ratio);
+        g2d.drawRenderedImage(source, at);
+        g2d.dispose();
+        return bi;
     }
 
     /**
