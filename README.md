@@ -11,7 +11,6 @@ InteractiveImagePanel is a Java library that provides an interactive image panel
 - Set the maximum and minimum zoom factors
 - Set the amount of zoom to be applied on each scroll with mouse wheel
 - Set the image to be displayed on the panel
-- Set the scaling algorithm to be used for zooming the image
 
 ## Installation
 
