@@ -184,6 +184,7 @@ public class InteractiveImagePanel extends JPanel {
      * @param ratio  the scaling ratio. A ratio greater than 1 enlarges the image, less than 1 shrinks the image.
      * @return a new BufferedImage that is a scaled version of the original image or null if an unsupported scaling
      * strategy is specified.
+     * @see Scale
      */
     private BufferedImage scaleImage(BufferedImage source, double ratio) {
         switch (scale) {
@@ -326,6 +327,8 @@ public class InteractiveImagePanel extends JPanel {
      * Sets the scaling strategy for the image.
      *
      * @param scale the scaling strategy to use, represented by the Scale enum.
+     *
+     * @see Scale
      */
     public void setScale(Scale scale) {
         this.scale = scale;
