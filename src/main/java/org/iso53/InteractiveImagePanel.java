@@ -137,7 +137,7 @@ public class InteractiveImagePanel extends JPanel {
      * @param ratio  the scaling ratio. A ratio greater than 1 enlarges the image, less than 1 shrinks the image.
      * @return a new BufferedImage that is a scaled version of the original image.
      */
-    public BufferedImage scaleImage(BufferedImage source, double ratio) {
+    private BufferedImage scaleImage(BufferedImage source, double ratio) {
         BufferedImage bi = new BufferedImage(
                 (int) (source.getWidth() * ratio),
                 (int) (source.getHeight() * ratio),
