@@ -20,7 +20,7 @@ Add the following dependency to your `pom.xml`:
 <dependency>
   <groupId>io.github.iso53</groupId>
   <artifactId>interactive-image-panel</artifactId>
-  <version>1.2.1</version>
+  <version>2.0.0</version>
 </dependency>
 ```
 
@@ -28,10 +28,11 @@ Add the following dependency to your `pom.xml`:
 Here is a basic example of how to use the InteractiveImagePanel:
 ```java
 InteractiveImagePanel interactiveImagePanel = new InteractiveImagePanel();
-interactiveImagePanel.setImage(image);
+interactiveImagePanel.setImage(readDummyImage());
 interactiveImagePanel.addZoomCapability();
 interactiveImagePanel.addMoveCapability();
-interactiveImagePanel.setImageFit(InteractiveImagePanel.IMAGE_FIT.COVER);
+interactiveImagePanel.setImageFit(ImageFit.COVER);
+interactiveImagePanel.setScale(Scale.FAST);
 ```
 
 ## Contributing
