@@ -142,7 +142,7 @@ public class InteractiveImagePanel extends JPanel {
      * @param ratio  the scaling ratio. A ratio greater than 1 enlarges the image, less than 1 shrinks the image.
      * @return a new BufferedImage that is a scaled version of the original image.
      */
-    public BufferedImage scaleImageFast(BufferedImage source, double ratio) {
+    private BufferedImage scaleImageFast(BufferedImage source, double ratio) {
         BufferedImage bi = new BufferedImage(
                 (int) (source.getWidth() * ratio),
                 (int) (source.getHeight() * ratio),
@@ -165,7 +165,7 @@ public class InteractiveImagePanel extends JPanel {
      * @param ratio  the scaling ratio. A ratio greater than 1 enlarges the image, less than 1 shrinks the image.
      * @return a new BufferedImage that is a scaled version of the original image.
      */
-    public BufferedImage scaleImagePretty(BufferedImage source, double ratio) {
+    private BufferedImage scaleImagePretty(BufferedImage source, double ratio) {
         int targetWidth = (int) (source.getWidth() * ratio);
         int targetHeight = (int) (source.getHeight() * ratio);
 
@@ -185,7 +185,7 @@ public class InteractiveImagePanel extends JPanel {
      * @return a new BufferedImage that is a scaled version of the original image or null if an unsupported scaling
      * strategy is specified.
      */
-    public BufferedImage scaleImage(BufferedImage source, double ratio) {
+    private BufferedImage scaleImage(BufferedImage source, double ratio) {
         switch (scale) {
             case FAST -> {
                 return scaleImageFast(source, ratio);
