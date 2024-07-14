@@ -1,5 +1,7 @@
 package org.iso53;
 
+import org.imgscalr.Scalr;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
@@ -63,10 +65,13 @@ public class InteractiveImagePanel extends JPanel {
     private ImageFit imageFit;
 
     /**
-     * The initial fitting strategy for the image within the panel. This value determines how the image is initially
-     * displayed when the panel is created.
+     * The scaling strategy used for image processing within the panel.
+     * This field determines how images are scaled when the panel's scaling functionality is invoked.
+     * The scaling strategy can be either FAST, which prioritizes speed over quality, or PRETTY,
+     * which prioritizes image quality over speed. This allows for flexible image scaling
+     * based on the requirements of the application.
      */
-    private IMAGE_FIT imageFit;
+    private Scale scale;
 
     /**
      * Constructs a new InteractiveImagePanel with default settings.
@@ -80,6 +85,7 @@ public class InteractiveImagePanel extends JPanel {
         this.currPosition = new Point(0, 0);
         this.tempPosition = new Point(0, 0);
         this.imageFit = ImageFit.COVER;
+        this.scale = Scale.FAST;
 
         // Add a ComponentListener to adjust the zoom and position when the component is shown
         this.addComponentListener(new ComponentAdapter() {
@@ -98,8 +104,10 @@ public class InteractiveImagePanel extends JPanel {
      * @param zoomStep      the amount of zoom to be applied on each scroll with mouse wheel.
      * @param image         the image to be displayed on the panel.
      * @param imageFit      fitting strategy for the image.
+     * @param scale         the scaling strategy to use.
      */
     public InteractiveImagePanel(double maxZoomFactor, double minZoomFactor, double zoomStep, BufferedImage image,
+                                 ImageFit imageFit, Scale scale) {
         this.maxZoomFactor = maxZoomFactor;
         this.minZoomFactor = minZoomFactor;
         this.zoomStep = zoomStep;
@@ -108,6 +116,7 @@ public class InteractiveImagePanel extends JPanel {
         this.currPosition = new Point(0, 0);
         this.tempPosition = new Point(0, 0);
         this.imageFit = imageFit;
+        this.scale = scale;
 
         this.addComponentListener(new ComponentAdapter() {
             @Override
@@ -133,7 +142,7 @@ public class InteractiveImagePanel extends JPanel {
      * @param ratio  the scaling ratio. A ratio greater than 1 enlarges the image, less than 1 shrinks the image.
      * @return a new BufferedImage that is a scaled version of the original image.
      */
-    private BufferedImage scaleImage(BufferedImage source, double ratio) {
+    public BufferedImage scaleImageFast(BufferedImage source, double ratio) {
         BufferedImage bi = new BufferedImage(
                 (int) (source.getWidth() * ratio),
                 (int) (source.getHeight() * ratio),
@@ -143,6 +152,52 @@ public class InteractiveImagePanel extends JPanel {
         g2d.drawRenderedImage(source, at);
         g2d.dispose();
         return bi;
+    }
+
+    /**
+     * Scales the given image to the specified ratio with a focus on maintaining high quality.
+     * This method uses the imgscalr library's Scalr.resize method to perform the scaling operation.
+     * The scaling process prioritizes image quality over scaling speed, making it suitable for applications
+     * where the visual quality of the scaled image is paramount. The method automatically determines
+     * the scaling mode (e.g., fit to width, fit to height) based on the target dimensions.
+     *
+     * @param source the original BufferedImage to be scaled.
+     * @param ratio  the scaling ratio. A ratio greater than 1 enlarges the image, less than 1 shrinks the image.
+     * @return a new BufferedImage that is a scaled version of the original image.
+     */
+    public BufferedImage scaleImagePretty(BufferedImage source, double ratio) {
+        int targetWidth = (int) (source.getWidth() * ratio);
+        int targetHeight = (int) (source.getHeight() * ratio);
+
+        return Scalr.resize(source, Scalr.Method.QUALITY, Scalr.Mode.AUTOMATIC, targetWidth, targetHeight);
+    }
+
+    /**
+     * Scales the given image according to the specified ratio and scaling strategy.
+     * This method provides a flexible way to scale images either quickly or with high quality,
+     * depending on the scaling strategy specified. The method supports two strategies: FAST and PRETTY.
+     * FAST uses an AffineTransform for quicker scaling but might compromise on quality.
+     * PRETTY uses the imgscalr library's Scalr.resize method for higher quality scaling at the cost of speed.
+     * If an unsupported scaling strategy is specified, the method prints an error message and returns null.
+     *
+     * @param source the original BufferedImage to be scaled.
+     * @param ratio  the scaling ratio. A ratio greater than 1 enlarges the image, less than 1 shrinks the image.
+     * @return a new BufferedImage that is a scaled version of the original image or null if an unsupported scaling
+     * strategy is specified.
+     */
+    public BufferedImage scaleImage(BufferedImage source, double ratio) {
+        switch (scale) {
+            case FAST -> {
+                return scaleImageFast(source, ratio);
+            }
+            case PRETTY -> {
+                return scaleImagePretty(source, ratio);
+            }
+            default -> {
+                System.out.println("Impossible");
+                return null;
+            }
+        }
     }
 
     /**
@@ -265,6 +320,15 @@ public class InteractiveImagePanel extends JPanel {
      */
     public void setImageFit(ImageFit imageFit) {
         this.imageFit = imageFit;
+    }
+
+    /**
+     * Sets the scaling strategy for the image.
+     *
+     * @param scale the scaling strategy to use, represented by the Scale enum.
+     */
+    public void setScale(Scale scale) {
+        this.scale = scale;
     }
 
     /**
