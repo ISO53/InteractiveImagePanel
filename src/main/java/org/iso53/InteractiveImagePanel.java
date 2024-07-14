@@ -57,14 +57,10 @@ public class InteractiveImagePanel extends JPanel {
     private final Point tempPosition;
 
     /**
-     * Enum representing the fitting strategy for the image within the panel.
-     * <br>CONTAIN: The image is resized to fit within the panel while maintaining its aspect ratio.
-     * <br>COVER: The image is resized to cover the entire panel while maintaining its aspect ratio.
-     * <br>ORIGINAL: The image is displayed at its original size.
+     * The initial fitting strategy for the image within the panel. This value determines how the image is initially
+     * displayed when the panel is created.
      */
-    public enum IMAGE_FIT {
-        CONTAIN, COVER, ORIGINAL
-    }
+    private ImageFit imageFit;
 
     /**
      * The initial fitting strategy for the image within the panel. This value determines how the image is initially
@@ -83,7 +79,7 @@ public class InteractiveImagePanel extends JPanel {
         this.lastPressed = new Point(0, 0);
         this.currPosition = new Point(0, 0);
         this.tempPosition = new Point(0, 0);
-        this.imageFit = IMAGE_FIT.COVER;
+        this.imageFit = ImageFit.COVER;
 
         // Add a ComponentListener to adjust the zoom and position when the component is shown
         this.addComponentListener(new ComponentAdapter() {
@@ -97,13 +93,13 @@ public class InteractiveImagePanel extends JPanel {
     /**
      * Constructs a new InteractiveImagePanel with the specified settings.
      *
-     * @param maxZoomFactor    the maximum zoom factor for the image.
-     * @param minZoomFactor    the minimum zoom factor for the image.
-     * @param zoomStep         the amount of zoom to be applied on each scroll with mouse wheel.
-     * @param image            the image to be displayed on the panel.
+     * @param maxZoomFactor the maximum zoom factor for the image.
+     * @param minZoomFactor the minimum zoom factor for the image.
+     * @param zoomStep      the amount of zoom to be applied on each scroll with mouse wheel.
+     * @param image         the image to be displayed on the panel.
+     * @param imageFit      fitting strategy for the image.
      */
     public InteractiveImagePanel(double maxZoomFactor, double minZoomFactor, double zoomStep, BufferedImage image,
-                                 IMAGE_FIT imageFit) {
         this.maxZoomFactor = maxZoomFactor;
         this.minZoomFactor = minZoomFactor;
         this.zoomStep = zoomStep;
@@ -264,10 +260,10 @@ public class InteractiveImagePanel extends JPanel {
     /**
      * Sets the initial fitting strategy for the image within the panel.
      *
-     * @param imageFit an IMAGE_FIT enum value representing the initial fitting strategy.
-     * @see IMAGE_FIT
+     * @param imageFit an ImageFit enum value representing the initial fitting strategy.
+     * @see ImageFit
      */
-    public void setImageFit(IMAGE_FIT imageFit) {
+    public void setImageFit(ImageFit imageFit) {
         this.imageFit = imageFit;
     }
 
@@ -275,7 +271,7 @@ public class InteractiveImagePanel extends JPanel {
      * Adjusts the zoom level and position of the image based on the current image fit strategy. After adjusting the
      * zoom level and position, the panel is refreshed to reflect the changes.
      *
-     * @see IMAGE_FIT
+     * @see ImageFit
      */
     private void adjustImageFit() {
         if (image == null) {
